@@ -8,16 +8,17 @@ RUN apt-get update && \
 
 # Enable and configure nginx
 RUN rm -f /etc/service/nginx/down
-ADD /docker/disable-version.conf /etc/nginx/conf.d/disable-version.conf
-ADD /docker/webapp.conf /etc/nginx/sites-enabled/webapp.conf
+COPY /docker/disable-version.conf /etc/nginx/conf.d/disable-version.conf
+COPY /docker/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 
 # Disable default nginx host so app can be accessed without specific host
 RUN rm /etc/nginx/sites-enabled/default
 
 
-ADD /docker/setup_app_logs.sh /etc/my_init.d/10_setup_app_logs.sh.sh
+COPY /docker/setup_app_logs.sh /etc/my_init.d/10_setup_app_logs.sh.sh
 # Startup script for generating nginx config that passes through env vars
-ADD /docker/nginx_environment.rb /etc/my_init.d/11_nginx_environment.rb
+COPY /docker/nginx_pass_environment.rb /etc/my_init.d/11_nginx_pass_environment.rb
+COPY /docker/nginx_config_from_environment.rb /etc/my_init.d/12_nginx_config_from_environment.rb
 
 RUN su app -c 'mkdir /home/app/{bundle,bundle-cache,webapp}'
 WORKDIR /home/app/webapp

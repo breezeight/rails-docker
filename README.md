@@ -11,6 +11,8 @@ This image is supposed to serve as a base image for Rails applications following
 ## Things this Dockerfile does
 
 * **Configure nginx with passenger** to run a standard Rails app and respond on any hostname
+    - Set `passenger_pre_start: http://localhost` to automatically issue a request to the Rails app and make it start as soon as nginx starts. Otherwise, the Rails app would be started on the first request, which then would a while.
+    - You can customize a part of the nginx configuration via environment variables. See 'nginx configuration via environment variables'.
 * Make sure `webapp/logs` is writable by the Rails app (so you can mount a volume there without worrying about permissions)
 * Add a startup script that configures **nginx to pass through all environment variables** to child processes (except HOME, HOSTNAME and PATH)
 * Install libpq-dev for Postgres support
@@ -19,7 +21,7 @@ This image is supposed to serve as a base image for Rails applications following
     - Copy the application to /home/app/webapp
     - Put a .bundle/config into the webapp, so bundler finds the bundle and the bundle cache (for git dependencies)
 
-## Notes
+## Usage
 
 * You can find an **example Dockerfile**, prepare script and .dockerignore in [example/](example/).
 * You can obviously replace and extend a lot in your application's Dockerfile, e.g.:
@@ -27,3 +29,13 @@ This image is supposed to serve as a base image for Rails applications following
     - add custom startup scripts to `/etc/my_init.d` - they're executed in alphabetical order and can be ordered by prefixing them with numbers
     - replace the default nginx configuration
     - install custom run-time dependencies via apt-get (Gem dependencies won't work as the ONBUILD instructions installing your Gems are always run before)
+
+## Configuration
+
+### nginx configuration via environment variables
+
+You can configure variables in the [http section](http://nginx.org/en/docs/http/ngx_http_core_module.html#http) of the nginx configuration via environment variables. These environment variables are read when starting the container, and written to a configuration file by [nginx_config_from_environment.rb](docker/nginx_config_from_environment.rb).
+
+Use environment variables prefixed with `NGINX_HTTP_` followed by the nginx configuration parameter in uppercase.
+
+Example: Setting `NGINX_HTTP_PASSENGER_MAX_POOL_SIZE=10` as environment variable via Docker would result in `passenger_max_pool_size 10;` being written to the nginx configuration.
