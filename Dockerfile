@@ -35,4 +35,4 @@ ONBUILD RUN su app -c 'cd /home/app/bundle-cache && \
 
 ONBUILD COPY / /home/app/webapp
 ONBUILD RUN cp -a /home/app/bundle-cache/.bundle /home/app/webapp
-ONBUILD RUN chown -R app /home/app/webapp
+ONBUILD RUN mkdir -p log tmp public && chown --recursive app log tmp public
