@@ -1,12 +1,12 @@
 # rails-docker Image
 
-This image is supposed to serve as a base image for Rails applications following certain conventions.
+This image is supposed to serve as a base image for Rails applications following certain conventions. It's based on [Phusion's passenger-ruby21 image](https://github.com/phusion/passenger-docker).
 
 ## Assumptions
 
 * Rails app is on the same level as Dockerfile (probably repository root)
 * Gemfile and Gemfile.lock exist
-* Before building, `bundle package --all` has been run, so at least all private Gems were put into `vendor/cache`. You might want to use a script like [example/prepare_docker_build.sh](prepare_docker_build.sh) to do this.
+* Before building, `bundle package --all` has been run, so at least all private Gems were put into `vendor/cache`. You might want to use a script like [prepare_docker_build.sh](example/prepare_docker_build.sh) to do this.
 
 ## Things this Dockerfile does
 
