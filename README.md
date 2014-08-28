@@ -23,6 +23,8 @@ This image is supposed to serve as a base image for Rails applications following
     - Run `bundle install`
     - Copy the application to /home/app/webapp
     - Change the owners of `log`, `public` and `tmp` to the application user (`public` for possible asset precompilation)
+* Convert hostnames in /etc/hosts with underscores to hostnames with hyphens
+    - fig's container linking hostnames aren't valid (https://github.com/docker/fig/issues/229)
 
 ## Usage
 
