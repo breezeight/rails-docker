@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 5
+  username: docker
+  password: docker
+  # Read host and port from environment variables - possibly set via a Docker link
+  host: <%= ENV.fetch('DB_1_PORT_5432_TCP_ADDR', 'localhost') %>
+  port: <%= ENV.fetch('DB_1_PORT_5432_TCP_PORT', '5432') %>
+
+production: &production
+  <<: *default
+  database: webapp
+
+# Use same database for development and production
+development:
+  <<: *production
+
+test:
+  <<: *default
+  database: webapp_test

@@ -35,7 +35,7 @@ This image is supposed to serve as a base image for Rails applications following
 
     This only works for simple applications without additional dependencies, e.g. for an application without database and and assets pipeline.
 
-* You can find an **example Dockerfile**, prepare script and .dockerignore in [example/](example/).
+* You can find a more interesting **example** in the [example/](example/) folder. It does asset precompilation and sets up a database.
 * You can obviously replace and extend a lot in your application's Dockerfile, e.g.:
     - precompile assets
     - add a database.yml reading configuration from environment variables
