@@ -7,6 +7,7 @@ This image is supposed to serve as a base image for Rails applications following
 * Rails app is on the same level as Dockerfile (probably repository root)
 * Gemfile and Gemfile.lock exist
 * Before building, `bundle package --all` has been run, so at least all private Gems were put into `vendor/cache`. You might want to use a script like [prepare_docker_build.sh](example/prepare_docker_build.sh) to do this.
+* You don't need to install OS packages as dependencies for your Gems.
 
 ## Things this Dockerfile does
 
