@@ -20,6 +20,11 @@ COPY /docker/setup_app_logs.sh /etc/my_init.d/10_setup_app_logs.sh.sh
 COPY /docker/nginx_pass_environment.rb /etc/my_init.d/11_nginx_pass_environment.rb
 COPY /docker/nginx_config_from_environment.rb /etc/my_init.d/12_nginx_config_from_environment.rb
 
+# fig puts invalid hostnames into your hosts file for container linking
+# until the issue is fixed, this converts them by replacing underscores with hyphens
+# see related fig issue: https://github.com/docker/fig/issues/229
+COPY /docker/sanitize_hosts.sh /etc/my_init.d/13_sanitize_hosts.sh
+
 RUN su app -c 'mkdir /home/app/{bundle,bundle-cache,webapp}'
 WORKDIR /home/app/webapp
 
