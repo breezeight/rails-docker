@@ -15,7 +15,7 @@ COPY /docker/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 RUN rm /etc/nginx/sites-enabled/default
 
 
-COPY /docker/setup_app_logs.sh /etc/my_init.d/10_setup_app_logs.sh.sh
+COPY /docker/setup_app_logs.sh /etc/my_init.d/10_setup_app_logs.sh
 # Startup script for generating nginx config that passes through env vars
 COPY /docker/nginx_pass_environment.rb /etc/my_init.d/11_nginx_pass_environment.rb
 COPY /docker/nginx_config_from_environment.rb /etc/my_init.d/12_nginx_config_from_environment.rb
