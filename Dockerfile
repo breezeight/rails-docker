@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby21:0.9.12
+FROM phusion/passenger-ruby21:0.9.14
 MAINTAINER Finn GmbH <info@finn.de>
 
 RUN apt-get update && \
