@@ -1,6 +1,12 @@
 FROM phusion/passenger-ruby21:0.9.14
 MAINTAINER Finn GmbH <info@finn.de>
 
+# install td-agent with some useful plugins
+RUN curl -L http://toolbelt.treasuredata.com/sh/install-ubuntu-trusty-td-agent2.sh | sh
+RUN /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-logentries
+RUN /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-loggly
+RUN /opt/td-agent/embedded/bin/fluent-gem install fluent-plugin-elasticsearch
+
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y -o DPkg::Options::="--force-confold" install \
         libpq-dev && \
@@ -24,6 +30,9 @@ COPY /docker/nginx_config_from_environment.rb /etc/my_init.d/12_nginx_config_fro
 # until the issue is fixed, this converts them by replacing underscores with hyphens
 # see related fig issue: https://github.com/docker/fig/issues/229
 COPY /docker/sanitize_hosts.sh /etc/my_init.d/13_sanitize_hosts.sh
+
+ADD /docker/runit_fluentd /etc/service/fluentd/run
+ADD /docker/td-agent.conf /etc/td-agent/td-agent.conf
 
 RUN su app -c 'mkdir /home/app/{bundle,bundle-cache,webapp}'
 WORKDIR /home/app/webapp
