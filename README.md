@@ -56,3 +56,19 @@ You can configure variables in the [http section](http://nginx.org/en/docs/http/
 Use environment variables prefixed with `NGINX_HTTP_` followed by the nginx configuration parameter in uppercase.
 
 Example: Setting `NGINX_HTTP_PASSENGER_MAX_POOL_SIZE=10` as environment variable via Docker would result in `passenger_max_pool_size 10;` being written to the nginx configuration.
+
+### logging
+
+The image comes with fluentd pre-installed. It tails `production.log` per default.
+If you want to use it you have to configure at the very least the `elasticsearch` host to send the logs to:
+
+```bash
+ES_HOST=my_es.logging.com
+```
+
+There are a number of other options. You can find them in [td-agent.conf](docker/td-agent.conf).
+If not provided through the respective ENV vars they will be deleted from the configuration file.
+
+Alternatively you can replace the configuration file as a whole. For instance to send the logs
+somewhere else than an elasticsearch server. For this you can configure `FLUENTD_CONFIG_URL`.
+The image will download the configuration from there and use it.
