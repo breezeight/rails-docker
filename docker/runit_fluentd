@@ -1,7 +1,7 @@
 #!/bin/sh
 exec 2>&1
 
-if [ -f /tmp/foo.txt ]; then
+if [ -f /etc/td-agent/td-agent.conf ]; then
   exec /sbin/setuser td-agent /usr/sbin/td-agent --log /var/log/td-agent/td-agent.log --use-v1-config
 else
   echo 'td-agent not configured'
