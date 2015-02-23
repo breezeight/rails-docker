@@ -26,7 +26,7 @@ else
   if [ -z "$ES_HOST" ]; then
     rm /etc/td-agent/td-agent.conf
     echo logging is not configured >&2
-    exit 1
+    exit 0
   fi
 
   sed -i'' -e 's|<es_host>|'$ES_HOST'|' /etc/td-agent/td-agent.conf
