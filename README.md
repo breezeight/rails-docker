@@ -66,6 +66,13 @@ If you want to use it you have to configure at the very least the `elasticsearch
 ES_HOST=my_es.logging.com
 ```
 
+You may also want to configure the used tag to group the logs. Per default it is `fluentd`.
+You probably should set it to application's name, though:
+
+```bash
+ES_TAG=myapp
+```
+
 There are a number of other options. You can find them in [td-agent.conf](docker/td-agent.conf).
 If not provided through the respective ENV vars they will be deleted from the configuration file.
 
