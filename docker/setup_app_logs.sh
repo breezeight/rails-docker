@@ -30,8 +30,6 @@ else
   fi
 
   sed -i'' -e 's|<es_host>|'$ES_HOST'|' /etc/td-agent/td-agent.conf
-  sed -i'' -e 's|<es_index>|'"${ES_INDEX:-fluentd}"'|' /etc/td-agent/td-agent.conf
-  sed -i'' -e 's|<es_type>|'"${ES_TYPE:-fluentd}"'|' /etc/td-agent/td-agent.conf
   sed -i'' -e 's|<es_tag>|'"${ES_TAG:-rails}"'|' /etc/td-agent/td-agent.conf
 
   if [ -n "$ES_USER" ]; then
@@ -62,6 +60,18 @@ else
     sed -i'' -e 's|<es_scheme>|'$ES_SCHEME'|' /etc/td-agent/td-agent.conf
   else
     sed -i'' -E '/<es_scheme>/d' /etc/td-agent/td-agent.conf
+  fi
+
+  if [ -n "$ES_TYPE" ]; then
+    sed -i'' -e 's|<es_type>|'$ES_TYPE'|' /etc/td-agent/td-agent.conf
+  else
+    sed -i'' -E '/<es_type>/d' /etc/td-agent/td-agent.conf
+  fi
+
+  if [ -n "$ES_INDEX" ]; then
+    sed -i'' -e 's|<es_index>|'$ES_INDEX'|' /etc/td-agent/td-agent.conf
+  else
+    sed -i'' -E '/<es_index>/d' /etc/td-agent/td-agent.conf
   fi
 
   echo "logging to $ES_HOST"
