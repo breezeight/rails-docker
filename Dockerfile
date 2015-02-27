@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby21:0.9.14
+FROM phusion/passenger-ruby21:0.9.15
 MAINTAINER Finn GmbH <info@finn.de>
 
 # install td-agent with some useful plugins
