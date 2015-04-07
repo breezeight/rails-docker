@@ -54,3 +54,4 @@ ONBUILD RUN mkdir -p log tmp public && chown --recursive app log tmp public
 
 # save time-stamp in a file on docker build
 ONBUILD RUN echo $(/bin/date "+%Y-%m-%d %H-%M-%S") >  /home/app/webapp/public/build_timestamp.txt
+ONBUILD RUN chown app /home/app/webapp/public/build_timestamp.txt
