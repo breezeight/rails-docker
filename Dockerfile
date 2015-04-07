@@ -50,4 +50,10 @@ ONBUILD RUN su app -c 'cd /home/app/bundle-cache && \
 
 ONBUILD COPY / /home/app/webapp
 ONBUILD RUN cp -a /home/app/bundle-cache/.bundle /home/app/webapp
-ONBUILD RUN mkdir -p log tmp public && chown --recursive app log tmp public
+ONBUILD RUN mkdir -p log tmp public
+
+# save time-stamp in a file on docker build
+ONBUILD RUN echo $(/bin/date "+%Y-%m-%d %H-%M-%S") >  /home/app/webapp/public/build_timestamp.txt
+
+# set permissions
+ONBUILD RUN chown --recursive app log tmp public
