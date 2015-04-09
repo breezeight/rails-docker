@@ -53,7 +53,7 @@ ONBUILD RUN cp -a /home/app/bundle-cache/.bundle /home/app/webapp
 ONBUILD RUN mkdir -p log tmp public
 
 # save time-stamp in a file on docker build
-ONBUILD RUN echo $(/bin/date "+%Y-%m-%d %H-%M-%S") >  /home/app/webapp/public/build_timestamp.txt
+ONBUILD RUN echo $(/bin/date "+%Y-%m-%d %H:%M:%S" && echo "google: " && curl -s --head http://google.com | grep ^Date: | sed 's/Date: //g') >  /home/app/webapp/public/build_timestamp.txt
 
 # set permissions
 ONBUILD RUN chown --recursive app log tmp public
